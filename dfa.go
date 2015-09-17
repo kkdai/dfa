@@ -4,7 +4,7 @@ import "fmt"
 
 type transitionInput struct {
 	srcState int
-	input    interface{}
+	input    string
 }
 
 type dfa struct {
@@ -13,14 +13,14 @@ type dfa struct {
 	totalStates  []int
 	finalStates  []int
 	transition   map[transitionInput]int
-	inputMap     map[interface{}]bool
+	inputMap     map[string]bool
 }
 
 //New a new DFA
 func NewDFA(initState int, isFinal bool) *dfa {
 	retDFA := &dfa{
 		transition:   make(map[transitionInput]int),
-		inputMap:     make(map[interface{}]bool),
+		inputMap:     make(map[string]bool),
 		initState:    initState,
 		currentState: initState}
 
@@ -42,7 +42,7 @@ func (d *dfa) AddState(state int, isFinal bool) {
 }
 
 //Add new transition function into DFA
-func (d *dfa) AddTransition(srcState int, input interface{}, dstStateint int) {
+func (d *dfa) AddTransition(srcState int, input string, dstStateint int) {
 	find := false
 
 	for _, v := range d.totalStates {
@@ -66,7 +66,7 @@ func (d *dfa) AddTransition(srcState int, input interface{}, dstStateint int) {
 	d.transition[targetTrans] = dstStateint
 }
 
-func (d *dfa) Input(testInput interface{}) int {
+func (d *dfa) Input(testInput string) int {
 	intputTrans := transitionInput{srcState: d.currentState, input: testInput}
 	if val, ok := d.transition[intputTrans]; ok {
 		d.currentState = val
@@ -76,7 +76,8 @@ func (d *dfa) Input(testInput interface{}) int {
 	}
 }
 
-func (d *dfa) verify() bool {
+//To verify current state if it is final state
+func (d *dfa) Verify() bool {
 	for _, val := range d.finalStates {
 		if val == d.currentState {
 			return true
@@ -91,11 +92,11 @@ func (d *dfa) Reset() {
 }
 
 //Verify if list of input could be accept by DFA or not
-func (d *dfa) VerifyInputs(inputs []interface{}) bool {
+func (d *dfa) VerifyInputs(inputs []string) bool {
 	for _, v := range inputs {
 		d.Input(v)
 	}
-	return d.verify()
+	return d.Verify()
 }
 
 //To print detail transition table contain of current DFA
