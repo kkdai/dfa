@@ -16,9 +16,31 @@ Output Traisition Table
 
 This package also can output transition table, which is a way to represent all transition function in this DFA.
 
+
 ![image](images/DFA1-TT.png)
 
+```go
 
+dfa := NewDFA(0, false)
+dfa.AddState(1, false)
+dfa.AddState(2, true)
+
+dfa.AddTransition(0, "a", 1)
+dfa.AddTransition(1, "b", 2)
+
+dfa.PrintTransitionTable()
+
+// ===================================================
+// 	a|	b|
+// ---------------------------------------------------
+// 0 |	 1|	NA|
+// 1 |	NA|	 2|
+// 2 |	NA|	NA|
+// ---------------------------------------------------
+// ===================================================
+
+
+```
 
 
 Installation and Usage

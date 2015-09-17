@@ -37,4 +37,6 @@ func TestVerifyInputs(t *testing.T) {
 	if !dfa.VerifyInputs(inputs) {
 		t.Errorf("Verify Inputs is failed")
 	}
+
+	dfa.PrintTransitionTable()
 }

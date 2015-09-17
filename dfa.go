@@ -102,8 +102,29 @@ func (d *dfa) VerifyInputs(inputs []string) bool {
 //To print detail transition table contain of current DFA
 func (d *dfa) PrintTransitionTable() {
 	fmt.Println("===================================================")
-	for key, val := range d.transition {
-
-		fmt.Printf("%d |\t %d \n", key.srcState, val)
+	//list all inputs
+	var inputList []string
+	for key, _ := range d.inputMap {
+		fmt.Printf("\t%s|", key)
+		inputList = append(inputList, key)
 	}
+
+	fmt.Printf("\n")
+	fmt.Println("---------------------------------------------------")
+
+	for _, state := range d.totalStates {
+		fmt.Printf("%d |", state)
+		for _, key := range inputList {
+			checkInput := transitionInput{srcState: state, input: key}
+			if dstState, ok := d.transition[checkInput]; ok {
+				fmt.Printf("\t %d|", dstState)
+			} else {
+				fmt.Printf("\tNA|")
+			}
+		}
+		fmt.Printf("\n")
+	}
+
+	fmt.Println("---------------------------------------------------")
+	fmt.Println("===================================================")
 }
