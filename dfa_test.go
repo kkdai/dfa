@@ -40,3 +40,35 @@ func TestVerifyInputs(t *testing.T) {
 
 	dfa.PrintTransitionTable()
 }
+
+func TestAdvanceDFA(t *testing.T) {
+
+	dfa := NewDFA(0, false)
+	dfa.AddState(1, true)
+	dfa.AddState(2, false)
+
+	dfa.AddTransition(0, "0", 0)
+	dfa.AddTransition(0, "1", 1)
+	dfa.AddTransition(1, "0", 0)
+	dfa.AddTransition(1, "1", 2)
+	dfa.AddTransition(2, "0", 2)
+	dfa.AddTransition(2, "1", 2)
+
+	dfa.PrintTransitionTable()
+	inputs := []string{"0", "0", "1", "0", "1"}
+
+	if !dfa.VerifyInputs(inputs) {
+		t.Errorf("Verify inputs is failed")
+	}
+
+	//Reset the DFA for another verification
+	dfa.Reset()
+
+	//Test go to dead state 2
+
+	inputs2 := []string{"1", "1", "0", "0", "0"}
+
+	if dfa.VerifyInputs(inputs2) {
+		t.Errorf("Verify inputs is failed")
+	}
+}
