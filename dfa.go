@@ -7,7 +7,7 @@ type transitionInput struct {
 	input    string
 }
 
-type dfa struct {
+type DFA struct {
 	initState    int
 	currentState int
 	totalStates  []int
@@ -17,8 +17,8 @@ type dfa struct {
 }
 
 //New a new DFA
-func NewDFA(initState int, isFinal bool) *dfa {
-	retDFA := &dfa{
+func NewDFA(initState int, isFinal bool) *DFA {
+	retDFA := &DFA{
 		transition:   make(map[transitionInput]int),
 		inputMap:     make(map[string]bool),
 		initState:    initState,
@@ -29,7 +29,7 @@ func NewDFA(initState int, isFinal bool) *dfa {
 }
 
 //Add new state in this DFA
-func (d *dfa) AddState(state int, isFinal bool) {
+func (d *DFA) AddState(state int, isFinal bool) {
 	if state == -1 {
 		fmt.Println("Cannot add state as -1, it is dead state")
 		return
@@ -42,7 +42,7 @@ func (d *dfa) AddState(state int, isFinal bool) {
 }
 
 //Add new transition function into DFA
-func (d *dfa) AddTransition(srcState int, input string, dstStateint int) {
+func (d *DFA) AddTransition(srcState int, input string, dstStateint int) {
 	find := false
 
 	for _, v := range d.totalStates {
@@ -66,7 +66,7 @@ func (d *dfa) AddTransition(srcState int, input string, dstStateint int) {
 	d.transition[targetTrans] = dstStateint
 }
 
-func (d *dfa) Input(testInput string) int {
+func (d *DFA) Input(testInput string) int {
 	intputTrans := transitionInput{srcState: d.currentState, input: testInput}
 	if val, ok := d.transition[intputTrans]; ok {
 		d.currentState = val
@@ -77,7 +77,7 @@ func (d *dfa) Input(testInput string) int {
 }
 
 //To verify current state if it is final state
-func (d *dfa) Verify() bool {
+func (d *DFA) Verify() bool {
 	for _, val := range d.finalStates {
 		if val == d.currentState {
 			return true
@@ -87,12 +87,12 @@ func (d *dfa) Verify() bool {
 }
 
 //Reset DFA state to initilize state, but all state and transition function will remain
-func (d *dfa) Reset() {
+func (d *DFA) Reset() {
 	d.currentState = d.initState
 }
 
 //Verify if list of input could be accept by DFA or not
-func (d *dfa) VerifyInputs(inputs []string) bool {
+func (d *DFA) VerifyInputs(inputs []string) bool {
 	for _, v := range inputs {
 		d.Input(v)
 	}
@@ -100,7 +100,7 @@ func (d *dfa) VerifyInputs(inputs []string) bool {
 }
 
 //To print detail transition table contain of current DFA
-func (d *dfa) PrintTransitionTable() {
+func (d *DFA) PrintTransitionTable() {
 	fmt.Println("===================================================")
 	//list all inputs
 	var inputList []string
