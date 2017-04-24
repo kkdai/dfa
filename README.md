@@ -11,7 +11,7 @@ What is Deterministic Finite Automata
 In theory of computation, a branch of theoretical computer science, a deterministic finite automaton (DFA)—also known as deterministic finite state machine—is a finite state machine that accepts/rejects finite strings of symbols and only produces a unique computation (or run) of the automation for each input string.[1] 'Deterministic' refers to the uniqueness of the computation. In search of simplest models to capture the finite state machines, McCulloch and Pitts were among the first researchers to introduce a concept similar to finite automaton in 1943.  (sited from [here](https://en.wikipedia.org/wiki/Deterministic_finite_automaton))
 
 
-Output Traisition Table
+Output Transition Table
 =============
 
 This package also can output transition table, which is a way to represent all transition function in this DFA.
